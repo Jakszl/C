@@ -10,11 +10,11 @@ volatile int dec,ones;
 
 int readADC(char channel)
 {
-	ADMUX = (1 << REFS1)|(1<<ADLAR)|(channel << MUX0);		// VREF=2,56V channel 0 jest na PC0
-	_delay_us(100);											// czas na uregulowanie multiplexera
+	ADMUX = (1 << REFS1)|(1<<ADLAR)|(channel << MUX0);					// VREF=2,56V channel 0 jest na PC0
+	_delay_us(100);										// czas na uregulowanie multiplexera
 	ADCSRA |= (1<<ADSC);									// Uruchomienie konwersji
 	while (ADCSRA & (1<<ADSC));								// Oczekiwanie na koniec konwersji
-	return ADCH;											// 8 bitowy wynik ponieważ używamy ADLAR
+	return ADCH;										// 8 bitowy wynik ponieważ używamy ADLAR
 }
 
 void led_display(int x)
@@ -38,8 +38,8 @@ void led_display(int x)
 
 ISR(TIMER0_OVF_vect) {
 	// wyświetlanie wyniku
-	dec=(tempC/10);    //dzielenie w celu uzyskania liczby dziesiątek
-	ones=(tempC%10);	//reszta z dzielenia przez 10 w celu uzyskania liczby jedności
+	dec=(tempC/10);    			//dzielenie w celu uzyskania liczby dziesiątek
+	ones=(tempC%10);			//reszta z dzielenia przez 10 w celu uzyskania liczby jedności
 	led_display(dec);
 	PORTB|=(1<<PB1);
 	PORTB&=~(1<<PB0);
@@ -62,9 +62,9 @@ void syst_init()
 	
 	ADCSRA = (1<<ADEN)|(1<<ADPS1)|(1<< ADPS2)|(1<<ADIF);        // Włączenie ADC, div128
 	
-	TIMSK0=(1<<TOIE0) ;		// uruchomienie Timer0 overflow interrupt
+	TIMSK0=(1<<TOIE0) ;			// uruchomienie Timer0 overflow interrupt
 	TCNT0=0x00;				// ustawienie licznika timer0 na wartość 0
-	TCCR0B = (1<<CS11);		// start timer0 z 8 prescaler
+	TCCR0B = (1<<CS11);			// start timer0 z 8 prescaler
 	sei();					// włączenie przerwań
 }
 
