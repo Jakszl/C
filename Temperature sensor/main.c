@@ -14,7 +14,7 @@ int readADC(char channel)
 	_delay_us(100);											// czas na uregulowanie multiplexera
 	ADCSRA |= (1<<ADSC);									// Uruchomienie konwersji
 	while (ADCSRA & (1<<ADSC));								// Oczekiwanie na koniec konwersji
-	return ADCH;											// 8 bitowy wynik poniewa¿ u¿ywamy ADLAR
+	return ADCH;											// 8 bitowy wynik poniewaÅ¼ uÅ¼ywamy ADLAR
 }
 
 void led_display(int x)
@@ -37,9 +37,9 @@ void led_display(int x)
 
 
 ISR(TIMER0_OVF_vect) {
-	// wyœwietlanie wyniku
-	dec=(tempC/10);    //dzielenie w celu uzyskania liczby dziesi¹tek
-	ones=(tempC%10);	//reszta z dzielenia przez 10 w celu uzyskania liczby jednoœci
+	// wyÅ›wietlanie wyniku
+	dec=(tempC/10);    //dzielenie w celu uzyskania liczby dziesiÄ…tek
+	ones=(tempC%10);	//reszta z dzielenia przez 10 w celu uzyskania liczby jednoÅ›ci
 	led_display(dec);
 	PORTB|=(1<<PB1);
 	PORTB&=~(1<<PB0);
@@ -56,16 +56,16 @@ ISR(TIMER0_OVF_vect) {
 
 void syst_init()
 {
-	cli();					//Dezaktywacja przerwañ na czas inicializacji
-	DDRB =0xFF;				//Ustawianie wyjœæ
+	cli();					//Dezaktywacja przerwaÅ„ na czas inicializacji
+	DDRB =0xFF;				//Ustawianie wyjÅ›Ä‡
 	DDRD =0xFF;
 	
-	ADCSRA = (1<<ADEN)|(1<<ADPS1)|(1<< ADPS2)|(1<<ADIF);        // W³¹czenie ADC, div128
+	ADCSRA = (1<<ADEN)|(1<<ADPS1)|(1<< ADPS2)|(1<<ADIF);        // WÅ‚Ä…czenie ADC, div128
 	
 	TIMSK0=(1<<TOIE0) ;		// uruchomienie Timer0 overflow interrupt
-	TCNT0=0x00;				// ustawienie licznika timer0 na wartoœæ 0
+	TCNT0=0x00;				// ustawienie licznika timer0 na wartoÅ›Ä‡ 0
 	TCCR0B = (1<<CS11);		// start timer0 z 8 prescaler
-	sei();					// w³¹czenie przerwañ
+	sei();					// wÅ‚Ä…czenie przerwaÅ„
 }
 
 int main(void)
